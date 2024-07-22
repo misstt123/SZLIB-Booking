@@ -21,18 +21,27 @@ import (
 )
 
 type BookingService struct {
+	ReadKey      string
 	PreferFloor  enum.ServAddr
 	PreferSeatID string
 }
 
+// BookingRun 预约逻辑
 func (b *BookingService) BookingRun() error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(10*60))
 	defer cancel()
 	// 1.先通过喜好位置来筛选
 	date := time.Now().Add(time.Hour * time.Duration(24)).Format("20060102")
 	var err error
+	defer func() {
+		err = b.sendServerChan(ctx, date)
+		if err != nil {
+			log.Err(err).Str("date", date).Msg("send serverChan err")
+		}
+	}()
+
 	if b.PreferSeatID != "" && b.PreferFloor != "" {
-		err = b.BookingSeats(ctx, date, b.PreferFloor, b.PreferSeatID)
+		err = b.bookingSeats(ctx, date, b.PreferFloor, b.PreferSeatID)
 		if err != nil {
 			log.Err(err).Str("date", date).Str("floor", b.PreferFloor.String()).Str("seatID", b.PreferSeatID)
 		}
@@ -45,7 +54,7 @@ func (b *BookingService) BookingRun() error {
 	if b.PreferFloor == "" {
 		return nil
 	}
-	seats, err := b.GetLibrarySeat(ctx, b.PreferFloor, "")
+	seats, err := b.getLibrarySeat(ctx, b.PreferFloor, "")
 	if err != nil {
 		log.Err(err).Str("date", date).Str("floor", b.PreferFloor.String()).Msg("get library seats err")
 		return err
@@ -72,7 +81,7 @@ func (b *BookingService) BookingRun() error {
 	// 重试个五次吧
 	for i := 0; i < 5; i++ {
 		idx := rand.Intn(len(freeSeats) - 1)
-		err = b.BookingSeats(ctx, date, b.PreferFloor, freeSeats[idx].Id)
+		err = b.bookingSeats(ctx, date, b.PreferFloor, freeSeats[idx].Id)
 		if err != nil {
 			log.Err(err).Str("date", date).Int("count", i+1).Str("floor", b.PreferFloor.String()).Str("seatID", b.PreferSeatID)
 		}
@@ -81,16 +90,12 @@ func (b *BookingService) BookingRun() error {
 			break
 		}
 	}
-	err = b.SendServerChan(ctx, date)
-	if err != nil {
-		log.Err(err).Str("date", date).Msg("send serverChan err")
-	}
 
 	return nil
 }
 
-// GetLibrarySeat 获取图书馆座位
-func (b *BookingService) GetLibrarySeat(ctx context.Context, floor enum.ServAddr, seatID string) ([]model.Seat, error) {
+// getLibrarySeat 获取图书馆座位
+func (b *BookingService) getLibrarySeat(ctx context.Context, floor enum.ServAddr, seatID string) ([]model.Seat, error) {
 	response, err := pkg.GetClient().
 		R().
 		SetContext(ctx).
@@ -130,8 +135,8 @@ func (b *BookingService) smpsw() string {
 	return hex.EncodeToString(h.Sum(nil))
 }
 
-// BookingSeats 预约位置
-func (b *BookingService) BookingSeats(ctx context.Context, bookDate string, floor enum.ServAddr, seatId string) error {
+// bookingSeats 预约位置
+func (b *BookingService) bookingSeats(ctx context.Context, bookDate string, floor enum.ServAddr, seatId string) error {
 	response, err := pkg.GetClient().
 		R().
 		SetContext(ctx).
@@ -140,8 +145,8 @@ func (b *BookingService) BookingSeats(ctx context.Context, bookDate string, floo
 			"servaddr":   floor.String(),
 			"seatid":     seatId,
 			"bookdate":   bookDate,
-			"bookdata":   `[{"starttime":"09:00","endtime":"21:00"}]`,
-			"readerkey":  "oNDDOwfWBv43OjFMWDYLvRiqjcc0",
+			"bookdata":   `[{"starttime":"09:00","endtime":"17:00"}]`,
+			"readerkey":  b.ReadKey,
 			"nickname":   "用户已经注销",
 			"sex":        "0",
 			"headimgurl": `https://thirdwx.qlogo.cn/mmopen/vi_32/PiajxSqBRaELSFYibJFEiaxK4ykiaibiclu7Ey6vOw3D7VVCbs1U5dma6nbFjIPJsZiaamH7ta7bsL8DEG4EMo01y9T3PgY2BE5ibAQh3y1ujzXOGx4u7gaHb9KTpA/132`,
@@ -171,14 +176,14 @@ func (b *BookingService) BookingSeats(ctx context.Context, bookDate string, floo
 }
 
 const (
-	serverChanKey = "SCT253293TIslnLulDYA7cOPABJXfcHvM1"
+	serverChanKey = "oNDDO1234445jFMWDYglkfdjhoiglc0ss"
 	text          = `
 楼层：%s  
 座位号：%s`
 )
 
-// SendServerChan 微信通知
-func (b *BookingService) SendServerChan(ctx context.Context, bookingDate string) error {
+// sendServerChan 微信通知
+func (b *BookingService) sendServerChan(ctx context.Context, bookingDate string) error {
 	//format := time.Now().Add(24 * time.Hour).Format("20060102")
 	//format := "20240721"
 	response, err := pkg.GetClient().
@@ -187,7 +192,7 @@ func (b *BookingService) SendServerChan(ctx context.Context, bookingDate string)
 		SetResult(&model.BookingRes{}).
 		SetQueryParams(map[string]string{
 			"bookingdate": bookingDate,
-			"readerkey":   "oNDDOwfWBv43OjFMWDYLvRiqjcc0",
+			"readerkey":   b.ReadKey,
 			"type":        "",
 			"pagesize":    "0",
 			"pageindex":   "0",
@@ -230,7 +235,7 @@ func (b *BookingService) SendServerChan(ctx context.Context, bookingDate string)
 
 	dateStr := time.Now().Format("01-02")
 	if isSuccess {
-		data.Set("text", dateStr+"预约通知")
+		data.Set("text", dateStr+"预约成功")
 		data.Set("desp", fmt.Sprintf(text, tmpBooking.Servaddr, tmpBooking.Seatid))
 	} else {
 		data.Set("text", dateStr+"预约失败")

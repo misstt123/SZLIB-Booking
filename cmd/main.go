@@ -40,16 +40,34 @@ func main() {
 // runSchedule 运行定时任务
 func runSchedule(s *gocron.Scheduler) error {
 	bookingService := &service.BookingService{
+		ReadKey:      "oNDDO1234445jFMWDYglkfdjhoiglc0",
 		PreferFloor:  enum.Floor3Dong,
 		PreferSeatID: "129",
 	}
-	job, err := s.Every(1).Days().At("23:30").Do(func() {
-		_ = bookingService.BookingRun()
+	//job, err := s.Every(5).Seconds().Do(func() {
+	//	_ = bookingService.BookingRun()
+	//})
+
+	// 1.添加预约任务
+	job, err := s.Every(1).Days().At("10:00").Do(func() {
+		time.Sleep(time.Duration(5) * time.Second)
+		// 重试个3次吧
+		for i := 0; i < 3; i++ {
+			err := bookingService.BookingRun()
+			if err == nil {
+				break
+			}
+			time.Sleep(time.Duration(20) * time.Second)
+		}
 	})
 	if err != nil {
 		log.Err(err).Str("job", job.GetName()).Msg("run job err")
 		return err
 	}
+
+	// 2.添加自动签到任务
+	// todo ...
+
 	s.StartBlocking()
 	return nil
 }

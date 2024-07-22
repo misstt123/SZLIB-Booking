@@ -94,7 +94,7 @@ var (
 	// operatorToken 操作码
 	operatorToken atomic.Value
 
-	Wxuserinfo = `{"openid":"oNDDOwfWBv43OjFMWDYLvRiqjcc0","nickname":"用户已经注销","sex":0,"language":"","city":"","province":"","country":"","headimgurl":"https:\/\/thirdwx.qlogo.cn\/mmopen\/vi_32\/PiajxSqBRaELSFYibJFEiaxK4ykiaibiclu7Ey6vOw3D7VVCbs1U5dma6nbFjIPJsZiaamH7ta7bsL8DEG4EMo01y9T3PgY2BE5ibAQh3y1ujzXOGx4u7gaHb9KTpA\/132","privilege":[]}
+	Wxuserinfo = `{"openid":"oNDDO1234445jFMWDYglkfdjhoiglc0","nickname":"用户已经注销","sex":0,"language":"","city":"","province":"","country":"","headimgurl":"https:\/\/thirdwx.qlogo.cn\/mmopen\/vi_32\/PiajxSqBRaELSFYibJFEiaxK4ykiaibiclu7Ey6vOw3D7VVCbs1U5dma6nbFjIPJsZiaamH7ta7bsL8DEG4EMo01y9T3PgY2BE5ibAQh3y1ujzXOGx4u7gaHb9KTpA\/132","privilege":[]}
 `
 )
 
@@ -181,7 +181,7 @@ func GetClient() *resty.Client {
 		option(
 			cli,
 			WithBaseURLMiddleware(baseURL),
-			WithTimeoutMiddleware(45*time.Second),
+			WithTimeoutMiddleware(60*time.Second),
 			WithCommonHeader(),
 			WithCookie(),
 			//WithHeaderBodyMiddleware(),

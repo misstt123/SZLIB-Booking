@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GoORMHelperCache">
+    <option name="schemaMapping">
+      <map>
+        <entry key="Booking">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/model/booking_list.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BookingRes">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/model/booking_list.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BookingService">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/service/booking_service.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CommonRes">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/model/room_seat.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="NextReader">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/model/room_seat.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="OperateToken">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/pkg/fetch_client.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Reader">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/model/room_seat.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Res">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/model/room_seat.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Room">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/model/room_seat.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RoomPara">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/model/room_seat.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Seat">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/model/room_seat.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="SerChanClient">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/pkg/server_chan_client.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="TomorrowReader">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/model/room_seat.go" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="scannedPathMapping">
+      <map>
+        <entry key="file://$PROJECT_DIR$/cmd/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1721617746399" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/db/db.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1721474320712" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/enum/room_status.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1721482222798" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/enum/serv_addr.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1721487492997" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/enum/url.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1721499705956" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/model/booking_list.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1721499846972" />
+              <option name="schema">
+                <list>
+                  <option value="Booking" />
+                  <option value="BookingRes" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/model/room_seat.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1721617324507" />
+              <option name="schema">
+                <list>
+                  <option value="Res" />
+                  <option value="CommonRes" />
+                  <option value="Room" />
+                  <option value="Seat" />
+                  <option value="Reader" />
+                  <option value="NextReader" />
+                  <option value="TomorrowReader" />
+                  <option value="RoomPara" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/pkg/fetch_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1721616834889" />
+              <option name="schema">
+                <list>
+                  <option value="OperateToken" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/pkg/server_chan_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1721562197786" />
+              <option name="schema">
+                <list>
+                  <option value="SerChanClient" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/service/booking_service.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1721616679886" />
+              <option name="schema">
+                <list>
+                  <option value="BookingService" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="tableStructMapping">
+      <map>
+        <entry key="booking" value="Booking" />
+        <entry key="booking_res" value="BookingRes" />
+        <entry key="booking_service" value="BookingService" />
+        <entry key="common_res" value="CommonRes" />
+        <entry key="next_reader" value="NextReader" />
+        <entry key="operate_token" value="OperateToken" />
+        <entry key="reader" value="Reader" />
+        <entry key="res" value="Res" />
+        <entry key="room" value="Room" />
+        <entry key="room_para" value="RoomPara" />
+        <entry key="seat" value="Seat" />
+        <entry key="ser_chan_client" value="SerChanClient" />
+        <entry key="tomorrow_reader" value="TomorrowReader" />
+      </map>
+    </option>
+    <option name="lastTimeChecked" value="1721616551511" />
+  </component>
+</project>

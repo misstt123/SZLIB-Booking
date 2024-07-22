@@ -101,7 +101,7 @@ type TomorrowReader struct {
 	Nickname    string `json:"nickname"`
 	Gender      string `json:"gender"`
 	Headimgurl  string `json:"headimgurl"`
-	Bookingdate int    `json:"bookingdate"`
+	Bookingdate string `json:"bookingdate"`
 	Starttime   int    `json:"starttime"`
 	Endtime     int    `json:"endtime"`
 }
